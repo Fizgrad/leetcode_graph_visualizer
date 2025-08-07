@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高级图与树可视化工具 (v5.0)</title>
+    <title>多功能可视化工具 (图/树/矩阵 v6.1)</title>
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
     <style>
         :root {
             --primary-color: #0d6efd;
             --secondary-color: #198754;
+            --tertiary-color: #fd7e14;
+            /* For Matrix */
             --border-color: #dee2e6;
             --background-color: #f8f9fa;
             --card-background: white;
             --text-color: #212529;
         }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             margin: 0;
@@ -23,6 +27,7 @@
             display: flex;
             justify-content: center;
         }
+
         .container {
             width: 100%;
             max-width: 1400px;
@@ -30,20 +35,23 @@
             gap: 20px;
             flex-wrap: wrap;
         }
+
         .controls {
             flex: 1;
             min-width: 400px;
             background-color: var(--card-background);
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             display: flex;
             flex-direction: column;
         }
+
         .tab-buttons {
             display: flex;
             border-bottom: 1px solid var(--border-color);
         }
+
         .tab-button {
             flex: 1;
             padding: 15px;
@@ -55,11 +63,26 @@
             color: #495057;
             transition: all 0.2s;
         }
+
         .tab-button.active {
             background: var(--card-background);
+        }
+
+        #generalTreeTabBtn.active {
             color: var(--primary-color);
             border-bottom: 3px solid var(--primary-color);
         }
+
+        #leetcodeTreeTabBtn.active {
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--secondary-color);
+        }
+
+        #matrixTabBtn.active {
+            color: var(--tertiary-color);
+            border-bottom: 3px solid var(--tertiary-color);
+        }
+
         .tab-content {
             padding: 20px;
             flex-grow: 1;
@@ -67,43 +90,62 @@
             flex-direction: column;
             gap: 15px;
         }
+
         fieldset {
             border: 1px solid var(--border-color);
             border-radius: 4px;
             padding: 10px 10px 12px 10px;
             margin: 0;
         }
+
         legend {
             font-weight: bold;
-            color: var(--primary-color);
             padding: 0 5px;
             font-size: 14px;
         }
+
+        #generalTreeTab legend {
+            color: var(--primary-color);
+        }
+
+        #leetcodeTreeTab legend {
+            color: var(--secondary-color);
+        }
+
+        #matrixTab legend {
+            color: var(--tertiary-color);
+        }
+
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
+
         .format-selector {
             display: flex;
             gap: 15px;
             justify-content: space-around;
             flex-wrap: wrap;
         }
+
         .format-selector label {
             cursor: pointer;
             font-size: 14px;
         }
+
         .input-group {
             display: flex;
             flex-direction: column;
             gap: 5px;
         }
+
         .input-group label {
             font-weight: bold;
             font-size: 14px;
             color: #343a40;
         }
+
         .input-group textarea {
             width: 100%;
             font-family: 'Courier New', Courier, monospace;
@@ -114,21 +156,31 @@
             box-sizing: border-box;
             resize: vertical;
         }
+
         button.draw-btn {
             width: 100%;
             padding: 12px;
-            margin-top: auto; /* Push button to the bottom */
+            margin-top: auto;
             font-size: 16px;
             font-weight: bold;
             color: white;
-            background-color: var(--primary-color);
             border: none;
             border-radius: 4px;
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        button.draw-btn:hover { opacity: 0.9; }
-        .error { color: #dc3545; font-weight: bold; margin-top: 10px; word-break: break-word; }
+
+        button.draw-btn:hover {
+            opacity: 0.9;
+        }
+
+        .error {
+            color: #dc3545;
+            font-weight: bold;
+            margin-top: 10px;
+            word-break: break-word;
+        }
+
         .graph-container {
             flex: 2;
             min-width: 500px;
@@ -136,18 +188,25 @@
             min-height: 600px;
             background-color: var(--card-background);
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
         }
-        #mynetwork { width: 100%; height: 100%; border-radius: 8px; }
+
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
+        }
     </style>
 </head>
-<body>
 
+<body>
     <div class="container">
         <div class="controls">
             <div class="tab-buttons">
-                <button class="tab-button active" onclick="openTab('generalTreeTab')">通用图/树</button>
-                <button class="tab-button" onclick="openTab('leetcodeTreeTab')">LeetCode 二叉树</button>
+                <button id="generalTreeTabBtn" class="tab-button active"
+                    onclick="openTab('generalTreeTab')">通用图/树</button>
+                <button id="leetcodeTreeTabBtn" class="tab-button" onclick="openTab('leetcodeTreeTab')">二叉树</button>
+                <button id="matrixTabBtn" class="tab-button" onclick="openTab('matrixTab')">矩阵</button>
             </div>
 
             <div id="generalTreeTab" class="tab-content" style="display: flex;">
@@ -155,8 +214,10 @@
                     <fieldset>
                         <legend>图表示法</legend>
                         <div class="format-selector">
-                            <label><input type="radio" name="graphFormat" value="edgeList" onchange="updateUI()" checked> 边列表</label>
-                            <label><input type="radio" name="graphFormat" value="adjList" onchange="updateUI()"> 邻接列表</label>
+                            <label><input type="radio" name="graphFormat" value="edgeList" onchange="updateUI()"
+                                    checked> 边列表</label>
+                            <label><input type="radio" name="graphFormat" value="adjList" onchange="updateUI()">
+                                邻接列表</label>
                         </div>
                     </fieldset>
                     <fieldset>
@@ -167,53 +228,66 @@
                         </div>
                     </fieldset>
                 </div>
-                 <fieldset>
+                <fieldset>
                     <legend>节点索引</legend>
                     <div class="format-selector">
                         <label><input type="radio" name="indexMode" value="0-indexed" checked> 0-indexed</label>
                         <label><input type="radio" name="indexMode" value="1-indexed"> 1-indexed</label>
                     </div>
                 </fieldset>
-                
                 <div class="input-group">
                     <fieldset>
                         <legend>节点权重</legend>
                         <div class="format-selector">
-                            <label><input type="radio" name="hasNodeWeights" value="no" onchange="updateUI()" checked> 无</label>
-                            <label><input type="radio" name="hasNodeWeights" value="yes" onchange="updateUI()"> 有</label>
+                            <label><input type="radio" name="hasNodeWeights" value="no" onchange="updateUI()" checked>
+                                无</label>
+                            <label><input type="radio" name="hasNodeWeights" value="yes" onchange="updateUI()">
+                                有</label>
                         </div>
                     </fieldset>
-                    <textarea id="nodeWeightsInput" rows="2" placeholder="[10, 20, 30, ...]" style="display:none;"></textarea>
+                    <textarea id="nodeWeightsInput" rows="2" placeholder="[10, 20, 30, ...]"
+                        style="display:none;"></textarea>
                 </div>
-
                 <div class="input-group" id="edgeWeightsGroup">
                     <fieldset>
                         <legend>边权重来源</legend>
                         <div class="format-selector">
-                            <label><input type="radio" name="edgeWeightSource" value="none" onchange="updateUI()" checked> 无</label>
-                            <label><input type="radio" name="edgeWeightSource" value="separate" onchange="updateUI()"> 独立列表</label>
-                            <label><input type="radio" name="edgeWeightSource" value="thirdElement" onchange="updateUI()"> 第三元素</label>
+                            <label><input type="radio" name="edgeWeightSource" value="none" onchange="updateUI()"
+                                    checked> 无</label>
+                            <label><input type="radio" name="edgeWeightSource" value="separate" onchange="updateUI()">
+                                独立列表</label>
+                            <label><input type="radio" name="edgeWeightSource" value="thirdElement"
+                                    onchange="updateUI()"> 第三元素</label>
                         </div>
                     </fieldset>
-                    <textarea id="edgeWeightsInput" rows="3" placeholder="[5, 8, 2, ...]" style="display:none;"></textarea>
+                    <textarea id="edgeWeightsInput" rows="3" placeholder="[5, 8, 2, ...]"
+                        style="display:none;"></textarea>
                 </div>
-
                 <div class="input-group" style="flex-grow: 1; display: flex; flex-direction: column;">
                     <label for="graphStructureInput">图结构数据</label>
-                    <textarea id="graphStructureInput" placeholder="[[0,1], [1,2], ...]" style="flex-grow: 1;"></textarea>
+                    <textarea id="graphStructureInput" placeholder="[[0,1], [1,2], ...]"
+                        style="flex-grow: 1;"></textarea>
                 </div>
-
                 <button class="draw-btn" onclick="drawGeneralTree()">绘制通用图/树</button>
                 <p id="error-message-general" class="error"></p>
             </div>
 
             <div id="leetcodeTreeTab" class="tab-content" style="display: none;">
                 <div class="input-group" style="flex-grow: 1; display: flex; flex-direction: column;">
-                     <label for="leetcode-input">LeetCode 数组格式</label>
+                    <label for="leetcode-input">LeetCode 数组格式</label>
                     <textarea id="leetcode-input" style="flex-grow: 1;"></textarea>
                 </div>
                 <button class="draw-btn" onclick="drawLeetCodeTree()">绘制二叉树</button>
                 <p id="error-message-leetcode" class="error"></p>
+            </div>
+
+            <div id="matrixTab" class="tab-content" style="display: none;">
+                <div class="input-group" style="flex-grow: 1; display: flex; flex-direction: column;">
+                    <label for="matrix-input">矩阵数据 (二维数组)</label>
+                    <textarea id="matrix-input" style="flex-grow: 1;"></textarea>
+                </div>
+                <button class="draw-btn" onclick="drawMatrix()">绘制矩阵</button>
+                <p id="error-message-matrix" class="error"></p>
             </div>
         </div>
 
@@ -223,195 +297,149 @@
     </div>
 
     <script>
-        // --- DOM 元素 ---
+        // --- 全局变量和初始化 ---
         const networkContainer = document.getElementById('mynetwork');
         let network = new vis.Network(networkContainer, {}, {});
-        const generalTabControls = {
-            format: name => document.querySelector(`input[name="${name}"]:checked`).value,
-            nodeWeightsInput: document.getElementById('nodeWeightsInput'),
-            edgeWeightsInput: document.getElementById('edgeWeightsInput'),
-            graphStructureInput: document.getElementById('graphStructureInput'),
-            errorGeneral: document.getElementById('error-message-general'),
-            edgeWeightsGroup: document.getElementById('edgeWeightsGroup'),
-            separateEdgeWeightsInputContainer: document.getElementById('edgeWeightsInput')
-        };
-        const leetcodeTabControls = {
-            input: document.getElementById('leetcode-input'),
-            error: document.getElementById('error-message-leetcode')
-        };
+        // ... (其他控件的 DOM 获取保持不变)
+        const generalTabControls = { format: name => document.querySelector(`input[name="${name}"]:checked`).value, nodeWeightsInput: document.getElementById('nodeWeightsInput'), edgeWeightsInput: document.getElementById('edgeWeightsInput'), graphStructureInput: document.getElementById('graphStructureInput'), errorGeneral: document.getElementById('error-message-general'), edgeWeightsGroup: document.getElementById('edgeWeightsGroup'), separateEdgeWeightsInputContainer: document.getElementById('edgeWeightsInput') };
+        const leetcodeTabControls = { input: document.getElementById('leetcode-input'), error: document.getElementById('error-message-leetcode') };
+        const matrixTabControls = { input: document.getElementById('matrix-input'), error: document.getElementById('error-message-matrix') };
 
-        // --- UI 更新逻辑 ---
+        // --- UI 和 Tab 切换逻辑 (保持不变) ---
         function updateUI() {
-            // 控制节点权重输入框
-            const hasNodeWeights = generalTabControls.format('hasNodeWeights') === 'yes';
-            generalTabControls.nodeWeightsInput.style.display = hasNodeWeights ? 'block' : 'none';
-
-            // 控制边权重相关UI
-            const isEdgeList = generalTabControls.format('graphFormat') === 'edgeList';
-            generalTabControls.edgeWeightsGroup.style.display = isEdgeList ? 'block' : 'none';
-
-            if (isEdgeList) {
-                const edgeWeightSource = generalTabControls.format('edgeWeightSource');
-                // 只有当来源是“独立列表”时，才显示独立的输入框
-                generalTabControls.separateEdgeWeightsInputContainer.style.display = (edgeWeightSource === 'separate') ? 'block' : 'none';
-            } else {
-                 generalTabControls.separateEdgeWeightsInputContainer.style.display = 'none';
-            }
+            const hasNodeWeights = generalTabControls.format('hasNodeWeights') === 'yes'; generalTabControls.nodeWeightsInput.style.display = hasNodeWeights ? 'block' : 'none';
+            const isEdgeList = generalTabControls.format('graphFormat') === 'edgeList'; generalTabControls.edgeWeightsGroup.style.display = isEdgeList ? 'block' : 'none';
+            if (isEdgeList) { const edgeWeightSource = generalTabControls.format('edgeWeightSource'); generalTabControls.separateEdgeWeightsInputContainer.style.display = (edgeWeightSource === 'separate') ? 'block' : 'none'; } else { generalTabControls.separateEdgeWeightsInputContainer.style.display = 'none'; }
         }
-
-        // --- Tab 切换逻辑 ---
         function openTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none');
-            document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-            
-            const activeTab = document.getElementById(tabName);
-            activeTab.style.display = 'flex';
-            document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
-            
-            const button = activeTab.querySelector('.draw-btn');
-            if (tabName === 'generalTreeTab') {
-                button.style.backgroundColor = 'var(--primary-color)';
-                if (!generalTabControls.graphStructureInput.value.trim()) setGeneralExample();
-                drawGeneralTree();
-            } else {
-                button.style.backgroundColor = 'var(--secondary-color)';
-                if (!leetcodeTabControls.input.value.trim()) setLeetCodeExample();
-                drawLeetCodeTree();
-            }
+            document.querySelectorAll('.tab-content').forEach(tab => tab.style.display = 'none'); document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabName).style.display = 'flex'; document.getElementById(`${tabName}Btn`).classList.add('active');
+            const button = document.getElementById(tabName).querySelector('.draw-btn');
+            if (tabName === 'generalTreeTab') { button.style.backgroundColor = 'var(--primary-color)'; if (!generalTabControls.graphStructureInput.value.trim()) setGeneralExample(); drawGeneralTree(); }
+            else if (tabName === 'leetcodeTreeTab') { button.style.backgroundColor = 'var(--secondary-color)'; if (!leetcodeTabControls.input.value.trim()) setLeetCodeExample(); drawLeetCodeTree(); }
+            else if (tabName === 'matrixTab') { button.style.backgroundColor = 'var(--tertiary-color)'; if (!matrixTabControls.input.value.trim()) setMatrixExample(); drawMatrix(); }
         }
 
         // --- 示例数据 ---
-        function setGeneralExample() {
-            generalTabControls.graphStructureInput.value = `[[0,1,5],[1,3,10],[0,2,3],[2,3,4]]`;
-            document.querySelector('input[name="edgeWeightSource"][value="thirdElement"]').checked = true;
-            updateUI();
-        }
+        function setGeneralExample() { generalTabControls.graphStructureInput.value = `[[0,1,5],[1,3,10],[0,2,3],[2,3,4]]`; document.querySelector('input[name="edgeWeightSource"][value="thirdElement"]').checked = true; updateUI(); }
+        function setLeetCodeExample() { leetcodeTabControls.input.value = `[3,9,20,null,null,15,7]`; }
+        function setMatrixExample() { matrixTabControls.input.value = `[[11,17,13,0,18],[13,12,10,12,19],[4,8,10,14,16],[2,13,12,7,16],[4,9,7,4,3]]`; }
 
         // --- 核心绘制逻辑 ---
-        function drawGeneralTree() {
+        function drawGeneralTree() { /* ... 保持不变 ... */
             generalTabControls.errorGeneral.innerText = '';
             try {
-                // 1. 获取所有用户选项
-                const format = generalTabControls.format('graphFormat');
-                const indexMode = generalTabControls.format('indexMode');
-                const graphType = generalTabControls.format('graphType');
-                const hasNodeWeights = generalTabControls.format('hasNodeWeights') === 'yes';
-                const edgeWeightSource = format === 'edgeList' ? generalTabControls.format('edgeWeightSource') : 'none';
-
-                const idOffset = indexMode === '1-indexed' ? 1 : 0;
-                const adjustId = (id) => id - idOffset;
-
-                // 2. 解析输入
+                const format = generalTabControls.format('graphFormat'), indexMode = generalTabControls.format('indexMode'), graphType = generalTabControls.format('graphType'), hasNodeWeights = generalTabControls.format('hasNodeWeights') === 'yes', edgeWeightSource = format === 'edgeList' ? generalTabControls.format('edgeWeightSource') : 'none';
+                const idOffset = indexMode === '1-indexed' ? 1 : 0; const adjustId = (id) => id - idOffset;
                 const graphStructureText = generalTabControls.graphStructureInput.value.trim();
-                if (!graphStructureText) { network.setData({nodes: [], edges: []}); return; }
+                if (!graphStructureText) { network.setData({ nodes: [], edges: [] }); return; }
                 const graphData = JSON.parse(graphStructureText);
-                
                 const nodeWeights = hasNodeWeights ? JSON.parse(generalTabControls.nodeWeightsInput.value) : null;
-                
-                let edges = [];
-                let extractedEdgeWeights = null;
-                
-                // 3. 根据选项转换数据
+                let edges = [], extractedEdgeWeights = null;
                 if (format === 'edgeList') {
                     if (edgeWeightSource === 'thirdElement') {
-                        graphData.forEach(item => { if(!Array.isArray(item) || item.length !== 3) throw new Error("选择了“第三元素”，但数据项长度不为3。") });
-                        edges = graphData.map(item => [item[0], item[1]]);
-                        extractedEdgeWeights = graphData.map(item => item[2]);
-                    } else {
-                        graphData.forEach(item => { if(!Array.isArray(item) || item.length !== 2) throw new Error("边列表数据格式应为 [[u,v], ...]"); });
-                        edges = graphData;
-                        if (edgeWeightSource === 'separate') {
-                            extractedEdgeWeights = JSON.parse(generalTabControls.edgeWeightsInput.value);
-                        }
-                    }
-                } else { // adjList
+                        graphData.forEach(item => { if (!Array.isArray(item) || item.length !== 3) throw new Error("选择了“第三元素”，但数据项长度不为3。") }); edges = graphData.map(item => [item[0], item[1]]); extractedEdgeWeights = graphData.map(item => item[2]);
+                    } else { graphData.forEach(item => { if (!Array.isArray(item) || item.length !== 2) throw new Error("边列表数据格式应为 [[u,v], ...]"); }); edges = graphData; if (edgeWeightSource === 'separate') { extractedEdgeWeights = JSON.parse(generalTabControls.edgeWeightsInput.value); } }
+                } else {
                     const seenEdges = new Set();
-                    graphData.forEach((neighbors, raw_u) => {
-                        if(!Array.isArray(neighbors)) throw new Error("邻接列表数据格式不正确");
-                        const u = adjustId(raw_u + idOffset);
-                        neighbors.forEach(raw_v => {
-                            const v = adjustId(raw_v);
-                            if (graphType === 'undirected') {
-                                const edgeKey = `${Math.min(u, v)}-${Math.max(u, v)}`;
-                                if (!seenEdges.has(edgeKey)) { edges.push([u, v]); seenEdges.add(edgeKey); }
-                            } else { edges.push([u, v]); }
-                        });
-                    });
+                    graphData.forEach((neighbors, raw_u) => { if (!Array.isArray(neighbors)) throw new Error("邻接列表数据格式不正确"); const u = adjustId(raw_u + idOffset); neighbors.forEach(raw_v => { const v = adjustId(raw_v); if (graphType === 'undirected') { const edgeKey = `${Math.min(u, v)}-${Math.max(u, v)}`; if (!seenEdges.has(edgeKey)) { edges.push([u, v]); seenEdges.add(edgeKey); } } else { edges.push([u, v]); } }); });
                 }
-                
                 const adjustedEdges = edges.map(edge => edge.map(adjustId));
-
-                // 4. 生成节点和标签
                 let nodeCount = 0;
-                if (nodeWeights) {
-                    nodeCount = nodeWeights.length;
-                } else if (format === 'edgeList') {
-                    const allNodeIds = adjustedEdges.flat();
-                    nodeCount = allNodeIds.length > 0 ? Math.max(...allNodeIds) + 1 : 0;
-                } else { // adjList
-                    nodeCount = graphData.length;
-                }
-
-                const nodes = Array.from({ length: nodeCount }, (_, i) => {
-                    const displayId = i + idOffset;
-                    const weightLabel = (nodeWeights && i < nodeWeights.length) ? `(${nodeWeights[i]})` : '';
-                    const label = `${displayId}${weightLabel}`;
-                    return { id: i, label };
-                });
-
-                // 5. 配置并绘图
-                const visEdges = adjustedEdges.map((edge, i) => {
-                    const visEdge = { from: edge[0], to: edge[1] };
-                    if (extractedEdgeWeights && i < extractedEdgeWeights.length) {
-                        visEdge.label = String(extractedEdgeWeights[i]);
-                    }
-                    return visEdge;
-                });
-                
+                if (nodeWeights) { nodeCount = nodeWeights.length; } else if (format === 'edgeList') { const allNodeIds = adjustedEdges.flat(); nodeCount = allNodeIds.length > 0 ? Math.max(...allNodeIds) + 1 : 0; } else { nodeCount = graphData.length; }
+                const nodes = Array.from({ length: nodeCount }, (_, i) => { const displayId = i + idOffset; const weightLabel = (nodeWeights && i < nodeWeights.length) ? `(${nodeWeights[i]})` : ''; const label = `${displayId}${weightLabel}`; return { id: i, label }; });
+                const visEdges = adjustedEdges.map((edge, i) => { const visEdge = { from: edge[0], to: edge[1] }; if (extractedEdgeWeights && i < extractedEdgeWeights.length) visEdge.label = String(extractedEdgeWeights[i]); return visEdge; });
                 const data = { nodes, edges: visEdges };
-                const options = {
-                    layout: { hierarchical: false },
-                    nodes: { shape: 'box', size: 25, color: { border: '#007bff', background: '#cce5ff' } },
-                    edges: { arrows: { to: { enabled: graphType === 'directed' } }, font: { align: 'top', color: '#dc3545', strokeWidth: 0 }, color: '#6c757d' },
-                    physics: { enabled: true, solver: 'barnesHut' }
-                };
-                network.setData(data);
-                network.setOptions(options);
-
-            } catch (e) {
-                generalTabControls.errorGeneral.innerText = '解析错误: ' + e.message;
-            }
+                const options = { layout: { hierarchical: false }, nodes: { shape: 'box', size: 25, color: { border: '#007bff', background: '#cce5ff' } }, edges: { arrows: { to: { enabled: graphType === 'directed' } }, font: { align: 'top', color: '#dc3545', strokeWidth: 0 }, color: '#6c757d' }, physics: { enabled: true, solver: 'barnesHut' } };
+                network.setData(data); network.setOptions(options);
+            } catch (e) { generalTabControls.errorGeneral.innerText = '解析错误: ' + e.message; }
         }
-        
-        function setLeetCodeExample() { leetcodeTabControls.input.value = `[3,9,20,null,null,15,7]`; }
-        function drawLeetCodeTree() { /* LeetCode 逻辑保持不变 */ 
+        function drawLeetCodeTree() {
             const leetcodeTabControls = { input: document.getElementById('leetcode-input'), error: document.getElementById('error-message-leetcode') };
-             leetcodeTabControls.error.innerText = '';
+            leetcodeTabControls.error.innerText = '';
             try {
                 const line = leetcodeTabControls.input.value.split('\n').map(l => l.trim()).find(l => l && !l.startsWith('//'));
-                 if (!line) { network.setData({nodes: [], edges: []}); return; }
+                if (!line) { network.setData({ nodes: [], edges: [] }); return; }
                 const arr = JSON.parse(line.replace(/null/g, '"null"')).map(v => v === "null" ? null : v);
-                const nodes = []; const edges = [];
+                const nodes = [], edges = [];
                 if (arr.length > 0 && arr[0] !== null) {
-                    const queue = [0];
-                    nodes.push({ id: 0, label: String(arr[0]) });
+                    const queue = [0]; nodes.push({ id: 0, label: String(arr[0]) });
                     let head = 0;
-                    while(head < queue.length) {
-                        const pIndex = queue[head++];
-                        const lIndex = 2 * pIndex + 1; const rIndex = 2 * pIndex + 2;
+                    while (head < queue.length) {
+                        const pIndex = queue[head++]; const lIndex = 2 * pIndex + 1; const rIndex = 2 * pIndex + 2;
                         if (lIndex < arr.length && arr[lIndex] !== null) { nodes.push({ id: lIndex, label: String(arr[lIndex]) }); edges.push({ from: pIndex, to: lIndex }); queue.push(lIndex); }
                         if (rIndex < arr.length && arr[rIndex] !== null) { nodes.push({ id: rIndex, label: String(arr[rIndex]) }); edges.push({ from: pIndex, to: rIndex }); queue.push(rIndex); }
                     }
                 } else if (arr.length > 0) { throw new Error("根节点不能为 null。"); }
                 const data = { nodes, edges };
-                const options = {
-                    layout: { hierarchical: { direction: 'UD', sortMethod: 'directed', levelSeparation: 80, nodeSpacing: 120 } },
-                    nodes: { shape: 'circle', size: 25, color: { border: '#198754', background: '#d1e7dd' } },
-                    edges: { arrows: 'to', color: '#6c757d' }, physics: { enabled: false }
-                };
+                const options = { layout: { hierarchical: { direction: 'UD', sortMethod: 'directed', levelSeparation: 80, nodeSpacing: 120 } }, nodes: { shape: 'circle', size: 25, color: { border: '#198754', background: '#d1e7dd' } }, edges: { arrows: 'to', color: '#6c757d' }, physics: { enabled: false } };
                 network.setData(data); network.setOptions(options);
             } catch (e) { leetcodeTabControls.error.innerText = '解析错误: ' + e.message; }
         }
+
+        function drawMatrix() {
+            matrixTabControls.error.innerText = '';
+            try {
+                const matrixText = matrixTabControls.input.value.trim();
+                if (!matrixText) { network.setData({ nodes: [], edges: [] }); return; }
+
+                const matrix = JSON.parse(matrixText);
+                if (!Array.isArray(matrix) || (matrix.length > 0 && !Array.isArray(matrix[0]))) {
+                    throw new Error("输入必须是二维数组格式。");
+                }
+
+                const nodes = [];
+                const nodeSpacing = 80; // 可以调整节点间距
+
+                for (let i = 0; i < matrix.length; i++) {
+                    for (let j = 0; j < matrix[i].length; j++) {
+                        nodes.push({
+                            id: `${i}-${j}`,
+                            label: String(matrix[i][j]),
+                            x: j * nodeSpacing,
+                            y: i * nodeSpacing,
+                            fixed: true
+                        });
+                    }
+                }
+
+                const data = { nodes: nodes, edges: [] };
+                // 优化后的节点配置
+                const options = {
+                    layout: {
+                        hierarchical: false
+                    },
+                    nodes: {
+                        shape: 'box', // 使用 box 形状，能更好地包裹文字
+                        // size: 25, // 移除固定大小，让格子自适应内容
+                        margin: { // 增加内边距
+                            top: 10,
+                            right: 15,
+                            bottom: 10,
+                            left: 15
+                        },
+                        font: { // 调整字体
+                            size: 18,
+                            face: 'monospace',
+                            color: '#333333'
+                        },
+                        color: {
+                            border: 'var(--tertiary-color)',
+                            background: '#fff3e8'
+                        }
+                    },
+                    physics: {
+                        enabled: false // 禁用物理引擎以保持网格形状
+                    }
+                };
+                network.setData(data);
+                network.setOptions(options);
+
+            } catch (e) {
+                matrixTabControls.error.innerText = '解析错误: ' + e.message;
+            }
+        }
+        // ======================================================
 
         // --- 页面初始化 ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -420,4 +448,5 @@
         });
     </script>
 </body>
+
 </html>
