@@ -14,6 +14,23 @@ export class Renderer {
             { nodes: this.nodes, edges: this.edges },
             Renderer.defaultOptions()
         );
+
+        // 选中节点时切换字体为深色，避免浅字+浅底看不清
+        this.network.on('selectNode', (params) => {
+            if (params.nodes.length > 0) {
+                this.nodes.update(params.nodes.map((id) => ({
+                    id, font: { color: '#0f172a' },
+                })));
+            }
+        });
+        this.network.on('deselectNode', (params) => {
+            const deselected = params.previousSelection?.nodes || [];
+            if (deselected.length > 0) {
+                this.nodes.update(deselected.map((id) => ({
+                    id, font: { color: '#e2e8f0' },
+                })));
+            }
+        });
     }
 
     static defaultOptions() {
