@@ -1,0 +1,625 @@
+/* ============================================================
+ * LeetCode 可视化工具 — 科技感蓝主题
+ * 纯色为主，无渐变，微光阴影点缀
+ * ============================================================ */
+
+:root {
+    /* 主色阶 — 科技蓝 */
+    --c-bg: #0f172a;            /* 深底 */
+    --c-surface: #1e293b;       /* 卡片面 */
+    --c-surface-2: #334155;     /* 次级面 */
+    --c-border: #475569;        /* 边框 */
+    --c-border-light: #334155;
+
+    --c-primary: #38bdf8;       /* 主色 — 天蓝 */
+    --c-primary-hover: #0ea5e9;
+    --c-primary-dim: #0c4a6e;
+    --c-accent: #22d3ee;        /* 青色点缀 */
+
+    --c-text: #e2e8f0;          /* 主文字 */
+    --c-text-muted: #94a3b8;    /* 次文字 */
+    --c-text-bright: #f1f5f9;
+
+    --c-success: #34d399;
+    --c-warning: #fbbf24;
+    --c-danger: #f87171;
+
+    --c-glow: 0 0 12px rgba(56, 189, 248, 0.35);
+    --c-glow-strong: 0 0 20px rgba(56, 189, 248, 0.5);
+    --c-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    --c-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+    --radius: 10px;
+    --radius-sm: 6px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    margin: 0;
+    padding: 16px;
+    background: var(--c-bg);
+    color: var(--c-text);
+    min-height: 100vh;
+}
+
+/* ============================================================ Header */
+.header {
+    max-width: 1500px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--c-primary);
+    letter-spacing: 0.5px;
+    text-shadow: var(--c-glow);
+}
+
+.toolbar {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+#stats-display {
+    font-size: 12px;
+    color: var(--c-text-muted);
+    padding: 6px 12px;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    font-family: "SF Mono", "Cascadia Code", "Courier New", monospace;
+}
+
+/* ============================================================ Buttons */
+.tool-btn {
+    padding: 7px 14px;
+    border: 1px solid var(--c-primary);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--c-primary);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all .2s;
+}
+
+.tool-btn:hover {
+    background: var(--c-primary);
+    color: var(--c-bg);
+    box-shadow: var(--c-glow);
+}
+
+.tool-btn.secondary {
+    border-color: var(--c-border);
+    color: var(--c-text-muted);
+}
+
+.tool-btn.secondary:hover {
+    background: var(--c-surface-2);
+    color: var(--c-text);
+    box-shadow: none;
+}
+
+/* ============================================================ Layout */
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.controls {
+    flex: 1;
+    min-width: 380px;
+    max-width: 520px;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-light);
+    border-radius: var(--radius);
+    box-shadow: var(--c-shadow);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ============================================================ Tabs */
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid var(--c-border);
+    background: var(--c-surface-2);
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    flex: 1;
+    min-width: 70px;
+    padding: 12px 6px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--c-text-muted);
+    transition: all .2s;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+}
+
+.tab-button:hover {
+    color: var(--c-primary);
+    background: rgba(56, 189, 248, 0.05);
+}
+
+.tab-button.active {
+    color: var(--c-primary);
+    border-bottom-color: var(--c-primary);
+    background: var(--c-surface);
+}
+
+/* ============================================================ Tab Content */
+.tab-content {
+    padding: 16px;
+    flex-grow: 1;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.tab-content.active { display: flex; }
+
+/* ============================================================ Fieldset */
+fieldset {
+    border: 1px solid var(--c-border-light);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px 12px;
+    margin: 0;
+    background: rgba(56, 189, 248, 0.03);
+}
+
+legend {
+    font-weight: 600;
+    padding: 0 6px;
+    font-size: 12px;
+    color: var(--c-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.format-selector {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+}
+
+.format-selector label {
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--c-text);
+    transition: color .15s;
+}
+
+.format-selector label:hover { color: var(--c-primary); }
+
+/* ============================================================ Inputs */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input-group > label {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.input-group textarea,
+.input-group input,
+.input-group select {
+    width: 100%;
+    font-family: "SF Mono", "Cascadia Code", "Courier New", monospace;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--c-border);
+    box-sizing: border-box;
+    resize: vertical;
+    background: var(--c-bg);
+    color: var(--c-text-bright);
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.input-group textarea:focus,
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* 裸 textarea（节点权重/边权重输入）也统一风格 */
+textarea, input[type="text"], input[type="number"], select {
+    font-family: "SF Mono", "Cascadia Code", "Courier New", monospace;
+    font-size: 13px;
+    background: var(--c-bg);
+    color: var(--c-text-bright);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-sm);
+}
+
+textarea:focus, input:focus, select:focus {
+    outline: none;
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+}
+
+/* ============================================================ Draw Button */
+.draw-btn {
+    width: 100%;
+    padding: 11px;
+    margin-top: auto;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--c-bg);
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: var(--c-primary);
+    transition: all .2s;
+    letter-spacing: 0.5px;
+}
+
+.draw-btn:hover {
+    background: var(--c-primary-hover);
+    box-shadow: var(--c-glow);
+}
+
+/* ============================================================ Algo Controls */
+.algo-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.algo-row input[type="number"] {
+    width: 80px;
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--c-border);
+    font-size: 13px;
+}
+
+.algo-row select {
+    padding: 6px 8px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--c-border);
+    font-size: 13px;
+    background: var(--c-bg);
+    color: var(--c-text);
+    cursor: pointer;
+}
+
+.algo-row input[type="range"] {
+    width: 80px;
+    accent-color: var(--c-primary);
+}
+
+.speed-label {
+    font-size: 11px;
+    color: var(--c-text-muted);
+    min-width: 40px;
+    font-family: "SF Mono", monospace;
+}
+
+.algo-btn {
+    padding: 6px 12px;
+    border: 1px solid var(--c-primary);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--c-primary);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all .2s;
+}
+
+.algo-btn:hover {
+    background: var(--c-primary);
+    color: var(--c-bg);
+    box-shadow: var(--c-glow);
+}
+
+.algo-btn.reset {
+    border-color: var(--c-border);
+    color: var(--c-text-muted);
+}
+
+.algo-btn.reset:hover {
+    background: var(--c-surface-2);
+    color: var(--c-text);
+    box-shadow: none;
+}
+
+/* ============================================================ Messages */
+.error {
+    color: var(--c-danger);
+    font-weight: 600;
+    margin-top: 6px;
+    word-break: break-word;
+    font-size: 12px;
+}
+
+.info {
+    color: var(--c-primary);
+    font-weight: 600;
+    margin-top: 6px;
+    font-size: 12px;
+    min-height: 18px;
+    line-height: 1.5;
+}
+
+/* ============================================================ Graph Container */
+.graph-container {
+    flex: 2;
+    min-width: 500px;
+    height: 85vh;
+    min-height: 600px;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-light);
+    border-radius: var(--radius);
+    box-shadow: var(--c-shadow);
+    position: relative;
+    overflow: hidden;
+}
+
+#mynetwork {
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius);
+}
+
+/* ============================================================ Stack / Queue View */
+#struct-view {
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding: 24px 32px;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+/* --- 栈模式: 三栏并排 (当前栈 | 弹出历史 | 操作日志) --- */
+#struct-view.sq-mode-stack {
+    display: grid;
+    grid-template-areas: "display popped log";
+    grid-template-columns: auto minmax(160px, 1fr) minmax(200px, 1.5fr);
+    grid-template-rows: 1fr;
+    align-items: stretch;
+    height: 100%;
+}
+
+/* --- 队列模式: 队列在上, 弹出历史居中, 日志占满剩余高度 --- */
+#struct-view.sq-mode-queue {
+    display: grid;
+    grid-template-areas:
+        "display"
+        "popped"
+        "log";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
+    height: 100%;
+}
+
+#sq-display-wrap { grid-area: display; }
+#sq-popped-section { grid-area: popped; }
+#sq-log-section { grid-area: log; }
+
+/* --- 显示区包裹层 --- */
+.sq-display-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+#struct-view.sq-mode-stack .sq-display-wrap {
+    flex-direction: column;
+    align-self: center;
+}
+
+#struct-view.sq-mode-queue .sq-display-wrap {
+    flex-direction: row;
+    justify-content: center;
+}
+
+/* --- 方向标记 --- */
+.sq-marker {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--c-primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    padding: 4px 8px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid var(--c-primary);
+    border-radius: var(--radius-sm);
+}
+
+/* --- 数据显示区 --- */
+.sq-display {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    border: 1px dashed var(--c-border);
+    border-radius: var(--radius);
+    min-height: 80px;
+    min-width: 120px;
+    background: rgba(56, 189, 248, 0.05);
+}
+
+.sq-stack { flex-direction: column-reverse; }
+.sq-queue { flex-direction: row; }
+
+.sq-item {
+    padding: 10px 18px;
+    background: var(--c-primary);
+    color: var(--c-bg);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 15px;
+    text-align: center;
+    min-width: 44px;
+    box-shadow: var(--c-glow);
+    animation: sqFadeIn .3s ease;
+}
+
+@keyframes sqFadeIn {
+    from { transform: scale(0.7); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* --- 弹出历史 & 日志区块通用 --- */
+.sq-popped-section,
+.sq-log-section {
+    text-align: left;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sq-section-title {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--c-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    flex-shrink: 0;
+}
+
+/* --- 弹出历史 --- */
+.sq-popped {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    min-height: 44px;
+    padding: 10px;
+    border: 1px dashed var(--c-danger);
+    border-radius: var(--radius-sm);
+    background: rgba(248, 113, 113, 0.08);
+    overflow-y: auto;
+    flex: 1;
+}
+
+#struct-view.sq-mode-stack .sq-popped {
+    flex-direction: column;
+    align-items: stretch;
+    max-width: 220px;
+}
+
+#struct-view.sq-mode-queue .sq-popped {
+    flex-direction: row;
+    max-height: 100px;
+}
+
+.sq-popped-item {
+    padding: 6px 14px;
+    background: var(--c-danger);
+    color: #fff;
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 14px;
+    font-family: "SF Mono", monospace;
+    box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
+    animation: sqFadeIn .3s ease;
+    text-align: center;
+}
+
+.sq-popped-empty {
+    color: var(--c-text-muted);
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* --- 操作日志 --- */
+.sq-log {
+    overflow-y: auto;
+    font-size: 12px;
+    color: var(--c-text-muted);
+    width: 100%;
+    text-align: left;
+    font-family: "SF Mono", monospace;
+    padding: 6px 0;
+    flex: 1;
+    min-height: 0;
+}
+
+#struct-view.sq-mode-stack .sq-log {
+    max-height: none;
+}
+
+#struct-view.sq-mode-queue .sq-log {
+    max-height: none;
+}
+
+.sq-log div {
+    padding: 4px 8px;
+    border-left: 3px solid var(--c-primary);
+    margin: 2px 0;
+    background: rgba(56, 189, 248, 0.05);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* ============================================================ Scrollbar */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--c-bg); }
+::-webkit-scrollbar-thumb { background: var(--c-surface-2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--c-border); }
+
+/* ============================================================ Radio inputs */
+input[type="radio"] {
+    accent-color: var(--c-primary);
+    cursor: pointer;
+}
+
+/* ============================================================ Responsive */
+@media (max-width: 900px) {
+    .container { flex-direction: column; }
+    .controls { max-width: 100%; }
+    .graph-container { min-width: 100%; height: 50vh; }
+    .tab-button { font-size: 11px; padding: 10px 4px; }
+}
