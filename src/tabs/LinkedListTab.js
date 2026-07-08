@@ -84,26 +84,26 @@ export class LinkedListTab extends BaseTab {
             fixed: true,
             shape: 'box',
             color: { ...Renderer.COLORS.default },
-            font: { size: 16, color: '#e2e8f0' },
+            font: { size: 16, color: '#1e293b' },
         }));
 
         const edges = [];
         for (let i = 0; i < arr.length - 1; i++) {
-            edges.push({ id: `e${edges.length}`, from: i, to: i + 1, arrows: 'to', color: '#38bdf8', width: 2 });
+            edges.push({ id: `e${edges.length}`, from: i, to: i + 1, arrows: 'to', color: '#3b82f6', width: 2 });
             if (isDoubly) {
-                edges.push({ id: `e${edges.length}`, from: i + 1, to: i, arrows: 'to', color: '#60a5fa', width: 2, dashes: true });
+                edges.push({ id: `e${edges.length}`, from: i + 1, to: i, arrows: 'to', color: '#93c5fd', width: 2, dashes: true });
             }
         }
         if (isCircular && arr.length > 0) {
-            edges.push({ id: `e${edges.length}`, from: arr.length - 1, to: 0, arrows: 'to', color: '#38bdf8', width: 2 });
+            edges.push({ id: `e${edges.length}`, from: arr.length - 1, to: 0, arrows: 'to', color: '#3b82f6', width: 2 });
             if (isDoubly) {
-                edges.push({ id: `e${edges.length}`, from: 0, to: arr.length - 1, arrows: 'to', color: '#60a5fa', width: 2, dashes: true });
+                edges.push({ id: `e${edges.length}`, from: 0, to: arr.length - 1, arrows: 'to', color: '#93c5fd', width: 2, dashes: true });
             }
         }
 
         this.ctx.renderer.setData(nodes, edges, {
             layout: { hierarchical: false },
-            nodes: { shape: 'box', color: { border: '#38bdf8', background: '#1e3a5f' }, font: { size: 16, color: '#e2e8f0' } },
+            nodes: { shape: 'box', color: { border: '#3b82f6', background: '#dbeafe' }, font: { size: 16, color: '#1e293b' } },
             edges: { arrows: { to: { enabled: true } }, smooth: { type: 'curvedCW', roundness: 0.2 } },
             physics: { enabled: false },
         });
@@ -162,7 +162,7 @@ export class LinkedListTab extends BaseTab {
                     from: e.from,
                     to: e.to,
                     arrows: 'to',
-                    color: e.color || '#475569',
+                    color: e.color || '#94a3b8',
                     width: e.width || 2,
                     dashes: e.dashes || false,
                 }));

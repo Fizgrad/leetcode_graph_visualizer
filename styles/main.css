@@ -1,33 +1,31 @@
 /* ============================================================
- * LeetCode 可视化工具 — 科技感蓝主题
- * 纯色为主，无渐变，微光阴影点缀
+ * LeetCode 可视化工具 — 亮色主题
  * ============================================================ */
 
 :root {
-    /* 主色阶 — 科技蓝 */
-    --c-bg: #0f172a;            /* 深底 */
-    --c-surface: #1e293b;       /* 卡片面 */
-    --c-surface-2: #334155;     /* 次级面 */
-    --c-border: #475569;        /* 边框 */
-    --c-border-light: #334155;
+    --c-bg: #f8fafc;
+    --c-surface: #ffffff;
+    --c-surface-2: #f1f5f9;
+    --c-border: #cbd5e1;
+    --c-border-light: #e2e8f0;
 
-    --c-primary: #38bdf8;       /* 主色 — 天蓝 */
-    --c-primary-hover: #0ea5e9;
-    --c-primary-dim: #0c4a6e;
-    --c-accent: #22d3ee;        /* 青色点缀 */
+    --c-primary: #3b82f6;
+    --c-primary-hover: #2563eb;
+    --c-primary-dim: #dbeafe;
+    --c-accent: #0ea5e9;
 
-    --c-text: #e2e8f0;          /* 主文字 */
-    --c-text-muted: #94a3b8;    /* 次文字 */
-    --c-text-bright: #f1f5f9;
+    --c-text: #1e293b;
+    --c-text-muted: #64748b;
+    --c-text-bright: #0f172a;
 
-    --c-success: #34d399;
-    --c-warning: #fbbf24;
-    --c-danger: #f87171;
+    --c-success: #22c55e;
+    --c-warning: #f59e0b;
+    --c-danger: #ef4444;
 
-    --c-glow: 0 0 12px rgba(56, 189, 248, 0.35);
-    --c-glow-strong: 0 0 20px rgba(56, 189, 248, 0.5);
-    --c-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-    --c-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --c-glow: 0 0 10px rgba(59, 130, 246, 0.3);
+    --c-glow-strong: 0 0 16px rgba(59, 130, 246, 0.5);
+    --c-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --c-shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
 
     --radius: 10px;
     --radius-sm: 6px;
@@ -61,7 +59,6 @@ body {
     font-weight: 700;
     color: var(--c-primary);
     letter-spacing: 0.5px;
-    text-shadow: var(--c-glow);
 }
 
 .toolbar {
@@ -97,8 +94,7 @@ body {
 
 .tool-btn:hover {
     background: var(--c-primary);
-    color: var(--c-bg);
-    box-shadow: var(--c-glow);
+    color: #fff;
 }
 
 .tool-btn.secondary {
@@ -109,7 +105,6 @@ body {
 .tool-btn.secondary:hover {
     background: var(--c-surface-2);
     color: var(--c-text);
-    box-shadow: none;
 }
 
 /* ============================================================ Layout */
@@ -159,7 +154,7 @@ body {
 
 .tab-button:hover {
     color: var(--c-primary);
-    background: rgba(56, 189, 248, 0.05);
+    background: rgba(59, 130, 246, 0.05);
 }
 
 .tab-button.active {
@@ -187,7 +182,7 @@ fieldset {
     border-radius: var(--radius-sm);
     padding: 10px 12px 12px;
     margin: 0;
-    background: rgba(56, 189, 248, 0.03);
+    background: rgba(59, 130, 246, 0.02);
 }
 
 legend {
@@ -249,8 +244,8 @@ legend {
     border: 1px solid var(--c-border);
     box-sizing: border-box;
     resize: vertical;
-    background: var(--c-bg);
-    color: var(--c-text-bright);
+    background: #fff;
+    color: var(--c-text);
     transition: border-color .2s, box-shadow .2s;
 }
 
@@ -259,15 +254,15 @@ legend {
 .input-group select:focus {
     outline: none;
     border-color: var(--c-primary);
-    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
 }
 
-/* 裸 textarea（节点权重/边权重输入）也统一风格 */
+/* 裸 textarea / input / select 也统一风格 */
 textarea, input[type="text"], input[type="number"], select {
     font-family: "SF Mono", "Cascadia Code", "Courier New", monospace;
     font-size: 13px;
-    background: var(--c-bg);
-    color: var(--c-text-bright);
+    background: #fff;
+    color: var(--c-text);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-sm);
 }
@@ -275,7 +270,7 @@ textarea, input[type="text"], input[type="number"], select {
 textarea:focus, input:focus, select:focus {
     outline: none;
     border-color: var(--c-primary);
-    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
 }
 
 /* ============================================================ Draw Button */
@@ -285,7 +280,7 @@ textarea:focus, input:focus, select:focus {
     margin-top: auto;
     font-size: 14px;
     font-weight: 700;
-    color: var(--c-bg);
+    color: #fff;
     border: none;
     border-radius: var(--radius-sm);
     cursor: pointer;
@@ -320,7 +315,7 @@ textarea:focus, input:focus, select:focus {
     border-radius: var(--radius-sm);
     border: 1px solid var(--c-border);
     font-size: 13px;
-    background: var(--c-bg);
+    background: #fff;
     color: var(--c-text);
     cursor: pointer;
 }
@@ -351,8 +346,7 @@ textarea:focus, input:focus, select:focus {
 
 .algo-btn:hover {
     background: var(--c-primary);
-    color: var(--c-bg);
-    box-shadow: var(--c-glow);
+    color: #fff;
 }
 
 .algo-btn.reset {
@@ -363,7 +357,6 @@ textarea:focus, input:focus, select:focus {
 .algo-btn.reset:hover {
     background: var(--c-surface-2);
     color: var(--c-text);
-    box-shadow: none;
 }
 
 /* ============================================================ Messages */
@@ -414,7 +407,7 @@ textarea:focus, input:focus, select:focus {
     overflow-y: auto;
 }
 
-/* --- 栈模式: 三栏并排 (当前栈 | 弹出历史 | 操作日志) --- */
+/* --- 栈模式: 三栏并排 --- */
 #struct-view.sq-mode-stack {
     display: grid;
     grid-template-areas: "display popped log";
@@ -424,7 +417,7 @@ textarea:focus, input:focus, select:focus {
     height: 100%;
 }
 
-/* --- 队列模式: 队列在上, 弹出历史居中, 日志占满剩余高度 --- */
+/* --- 队列模式: 三行纵排 --- */
 #struct-view.sq-mode-queue {
     display: grid;
     grid-template-areas:
@@ -468,7 +461,7 @@ textarea:focus, input:focus, select:focus {
     letter-spacing: 1px;
     white-space: nowrap;
     padding: 4px 8px;
-    background: rgba(56, 189, 248, 0.1);
+    background: var(--c-primary-dim);
     border: 1px solid var(--c-primary);
     border-radius: var(--radius-sm);
 }
@@ -484,7 +477,7 @@ textarea:focus, input:focus, select:focus {
     border-radius: var(--radius);
     min-height: 80px;
     min-width: 120px;
-    background: rgba(56, 189, 248, 0.05);
+    background: rgba(59, 130, 246, 0.04);
 }
 
 .sq-stack { flex-direction: column-reverse; }
@@ -493,13 +486,12 @@ textarea:focus, input:focus, select:focus {
 .sq-item {
     padding: 10px 18px;
     background: var(--c-primary);
-    color: var(--c-bg);
+    color: #fff;
     border-radius: var(--radius-sm);
     font-weight: 700;
     font-size: 15px;
     text-align: center;
     min-width: 44px;
-    box-shadow: var(--c-glow);
     animation: sqFadeIn .3s ease;
 }
 
@@ -540,7 +532,7 @@ textarea:focus, input:focus, select:focus {
     padding: 10px;
     border: 1px dashed var(--c-danger);
     border-radius: var(--radius-sm);
-    background: rgba(248, 113, 113, 0.08);
+    background: rgba(239, 68, 68, 0.06);
     overflow-y: auto;
     flex: 1;
 }
@@ -564,9 +556,8 @@ textarea:focus, input:focus, select:focus {
     font-weight: 700;
     font-size: 14px;
     font-family: "SF Mono", monospace;
-    box-shadow: 0 0 8px rgba(248, 113, 113, 0.3);
-    animation: sqFadeIn .3s ease;
     text-align: center;
+    animation: sqFadeIn .3s ease;
 }
 
 .sq-popped-empty {
@@ -588,27 +579,22 @@ textarea:focus, input:focus, select:focus {
     min-height: 0;
 }
 
-#struct-view.sq-mode-stack .sq-log {
-    max-height: none;
-}
-
-#struct-view.sq-mode-queue .sq-log {
-    max-height: none;
-}
+#struct-view.sq-mode-stack .sq-log { max-height: none; }
+#struct-view.sq-mode-queue .sq-log { max-height: none; }
 
 .sq-log div {
     padding: 4px 8px;
     border-left: 3px solid var(--c-primary);
     margin: 2px 0;
-    background: rgba(56, 189, 248, 0.05);
+    background: rgba(59, 130, 246, 0.05);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 
 /* ============================================================ Scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--c-bg); }
-::-webkit-scrollbar-thumb { background: var(--c-surface-2); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--c-border); }
+::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--c-text-muted); }
 
 /* ============================================================ Radio inputs */
 input[type="radio"] {

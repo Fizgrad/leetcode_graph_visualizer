@@ -14,23 +14,6 @@ export class Renderer {
             { nodes: this.nodes, edges: this.edges },
             Renderer.defaultOptions()
         );
-
-        // 选中节点时切换字体为深色，避免浅字+浅底看不清
-        this.network.on('selectNode', (params) => {
-            if (params.nodes.length > 0) {
-                this.nodes.update(params.nodes.map((id) => ({
-                    id, font: { color: '#0f172a' },
-                })));
-            }
-        });
-        this.network.on('deselectNode', (params) => {
-            const deselected = params.previousSelection?.nodes || [];
-            if (deselected.length > 0) {
-                this.nodes.update(deselected.map((id) => ({
-                    id, font: { color: '#e2e8f0' },
-                })));
-            }
-        });
     }
 
     static defaultOptions() {
@@ -39,10 +22,10 @@ export class Renderer {
             nodes: {
                 shape: 'box',
                 size: 25,
-                font: { color: '#e2e8f0' },
-                color: { border: '#38bdf8', background: '#1e3a5f' },
+                font: { color: '#1e293b' },
+                color: { border: '#3b82f6', background: '#dbeafe' },
             },
-            edges: { color: '#475569' },
+            edges: { color: '#94a3b8' },
             physics: { enabled: true, solver: 'barnesHut' },
         };
     }

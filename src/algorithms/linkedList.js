@@ -16,15 +16,15 @@ import { COLORS as C } from '../constants/colors.js';
 function defaultEdges(n, isDoubly = false, isCircular = false) {
     const edges = [];
     for (let i = 0; i < n - 1; i++) {
-        edges.push({ from: i, to: i + 1, color: '#38bdf8', width: 2 });
+        edges.push({ from: i, to: i + 1, color: '#3b82f6', width: 2 });
         if (isDoubly) {
-            edges.push({ from: i + 1, to: i, color: '#60a5fa', width: 2, dashes: true });
+            edges.push({ from: i + 1, to: i, color: '#93c5fd', width: 2, dashes: true });
         }
     }
     if (isCircular && n > 0) {
-        edges.push({ from: n - 1, to: 0, color: '#38bdf8', width: 2 });
+        edges.push({ from: n - 1, to: 0, color: '#3b82f6', width: 2 });
         if (isDoubly) {
-            edges.push({ from: 0, to: n - 1, color: '#60a5fa', width: 2, dashes: true });
+            edges.push({ from: 0, to: n - 1, color: '#93c5fd', width: 2, dashes: true });
         }
     }
     return edges;
@@ -70,20 +70,20 @@ export function generateReverseFrames(arr, _opts = {}) {
         // 已反转的 prev 链: 从 prev 往回到 0
         if (prev !== null) {
             for (let i = prev; i > 0; i--) {
-                edges.push({ from: i, to: i - 1, color: '#34d399', width: 3 });
+                edges.push({ from: i, to: i - 1, color: '#22c55e', width: 3 });
             }
-            edges.push({ from: curr, to: prev, color: '#fbbf24', width: 3 });
+            edges.push({ from: curr, to: prev, color: '#f59e0b', width: 3 });
         }
 
         // curr → next (即将断开)
         if (next !== null) {
-            edges.push({ from: curr, to: next, color: '#475569', width: 2, dashes: true });
+            edges.push({ from: curr, to: next, color: '#94a3b8', width: 2, dashes: true });
         }
 
         // 剩余正向边
         if (next !== null) {
             for (let i = next; i < n - 1; i++) {
-                edges.push({ from: i, to: i + 1, color: '#38bdf8', width: 2 });
+                edges.push({ from: i, to: i + 1, color: '#3b82f6', width: 2 });
             }
         }
 
@@ -100,7 +100,7 @@ export function generateReverseFrames(arr, _opts = {}) {
     // 最终: 全部反向边
     const finalEdges = [];
     for (let i = n - 1; i > 0; i--) {
-        finalEdges.push({ from: i, to: i - 1, color: '#34d399', width: 3 });
+        finalEdges.push({ from: i, to: i - 1, color: '#22c55e', width: 3 });
     }
     frames.push({
         description: '反转完成! 所有 next 指针已反向',
@@ -322,12 +322,12 @@ export function generateRemoveNthFromEndFrames(arr, n, opts = {}) {
     for (let i = 0; i < len - 1; i++) {
         if (i === targetIdx - 1) {
             if (targetIdx + 1 < len) {
-                afterEdges.push({ from: i, to: targetIdx + 1, color: '#34d399', width: 3 });
+                afterEdges.push({ from: i, to: targetIdx + 1, color: '#22c55e', width: 3 });
             }
         } else if (i < targetIdx) {
-            afterEdges.push({ from: i, to: i + 1, color: '#38bdf8', width: 2 });
+            afterEdges.push({ from: i, to: i + 1, color: '#3b82f6', width: 2 });
         } else if (i > targetIdx) {
-            afterEdges.push({ from: i, to: i + 1, color: '#38bdf8', width: 2 });
+            afterEdges.push({ from: i, to: i + 1, color: '#3b82f6', width: 2 });
         }
     }
 

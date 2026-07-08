@@ -62,8 +62,8 @@ export class BinaryTreeTab extends BaseTab {
             this._lastEdges = edges;
             this.ctx.renderer.setData(nodes, edges, {
                 layout: { hierarchical: { direction: 'UD', sortMethod: 'directed', levelSeparation: 80, nodeSpacing: 120 } },
-                nodes: { shape: 'circle', size: 25, font: { color: '#e2e8f0' }, color: { border: '#38bdf8', background: '#1e3a5f' } },
-                edges: { arrows: 'to', color: '#475569' },
+                nodes: { shape: 'circle', size: 25, font: { color: '#1e293b' }, color: { border: '#3b82f6', background: '#dbeafe' } },
+                edges: { arrows: 'to', color: '#94a3b8' },
                 physics: { enabled: false },
             });
         } catch (e) {
@@ -89,12 +89,12 @@ export class BinaryTreeTab extends BaseTab {
             const r = 2 * p + 2;
             if (l < arr.length && arr[l] !== null) {
                 nodes.push({ id: l, label: String(arr[l]), color: { ...Renderer.COLORS.default } });
-                edges.push({ id: `e${edges.length}`, from: p, to: l, arrows: 'to', color: '#475569' });
+                edges.push({ id: `e${edges.length}`, from: p, to: l, arrows: 'to', color: '#94a3b8' });
                 queue.push(l);
             }
             if (r < arr.length && arr[r] !== null) {
                 nodes.push({ id: r, label: String(arr[r]), color: { ...Renderer.COLORS.default } });
-                edges.push({ id: `e${edges.length}`, from: p, to: r, arrows: 'to', color: '#475569' });
+                edges.push({ id: `e${edges.length}`, from: p, to: r, arrows: 'to', color: '#94a3b8' });
                 queue.push(r);
             }
         }

@@ -67,8 +67,8 @@ export class MatrixTab extends BaseTab {
                     fixed: true,
                     shape: 'box',
                     margin: { top: 8, right: 12, bottom: 8, left: 12 },
-                    font: { size: 14, face: 'monospace', color: '#e2e8f0' },
-                    color: { border: '#38bdf8', background: '#1e3a5f' },
+                    font: { size: 14, face: 'monospace', color: '#1e293b' },
+                    color: { border: '#3b82f6', background: '#dbeafe' },
                     widthConstraint: { minimum: 60 },
                 });
             }
@@ -78,8 +78,8 @@ export class MatrixTab extends BaseTab {
             nodes: {
                 shape: 'box',
                 margin: { top: 8, right: 12, bottom: 8, left: 12 },
-                font: { size: 14, face: 'monospace', color: '#e2e8f0' },
-                color: { border: '#38bdf8', background: '#1e3a5f' },
+                font: { size: 14, face: 'monospace', color: '#1e293b' },
+                color: { border: '#3b82f6', background: '#dbeafe' },
                 widthConstraint: { minimum: 60 },
             },
             physics: { enabled: false },
@@ -108,7 +108,7 @@ export class MatrixTab extends BaseTab {
             this.ctx.renderer.updateNodes([{
                 id: cellId,
                 label: `${matrix[frame.row][frame.col]}\n(dp:${frame.value})`,
-                color: { border: '#fbbf24', background: '#78350f' },
+                color: { border: '#f59e0b', background: '#fef3c7' },
             }]);
             resultEl.textContent = `[${i + 1}/${frames.length}] ${frame.description}`;
         });
@@ -117,7 +117,7 @@ export class MatrixTab extends BaseTab {
         if (completed) {
             const updates = frames.map((f) => ({
                 id: `${f.row}-${f.col}`,
-                color: { border: '#38bdf8', background: '#1e3a5f' },
+                color: { border: '#3b82f6', background: '#dbeafe' },
             }));
             this.ctx.renderer.updateNodes(updates);
             resultEl.textContent = `DP 完成。右下角结果: ${result}`;

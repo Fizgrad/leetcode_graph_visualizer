@@ -226,7 +226,7 @@ export class GeneralGraphTab extends BaseTab {
             const ve = { id: `e${i}`, from: e[0], to: e[1], color: '#94a3b8' };
             if (edgeWeights && i < edgeWeights.length) {
                 ve.label = String(edgeWeights[i]);
-                ve.font = { align: 'top', color: '#dc2626', strokeWidth: 0 };
+                ve.font = { align: 'top', color: '#ef4444', strokeWidth: 0 };
             }
             ve.arrows = directed ? 'to' : '';
             return ve;
@@ -234,11 +234,11 @@ export class GeneralGraphTab extends BaseTab {
 
         this.ctx.renderer.setData(nodes, edges, {
             layout: { hierarchical: false },
-            nodes: { shape: 'box', size: 25, font: { color: '#e2e8f0' }, color: { border: '#38bdf8', background: '#1e3a5f' } },
+            nodes: { shape: 'box', size: 25, font: { color: '#1e293b' }, color: { border: '#3b82f6', background: '#dbeafe' } },
             edges: {
                 arrows: { to: { enabled: directed } },
-                font: { align: 'top', color: '#f87171', strokeWidth: 0 },
-                color: '#475569',
+                font: { align: 'top', color: '#ef4444', strokeWidth: 0 },
+                color: '#94a3b8',
             },
             physics: { enabled: true, solver: 'barnesHut' },
         });

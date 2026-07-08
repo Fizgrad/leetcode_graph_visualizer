@@ -1,29 +1,16 @@
 /**
- * 统一颜色常量 — 适配暗色主题
- * 所有算法动画的高亮色从此模块引用，避免散落各处且与主题冲突。
+ * 统一颜色常量 — 亮色主题
  */
-
 export const COLORS = {
-    /** 默认节点色（未被算法处理时） */
-    default:    { background: '#1e3a5f', border: '#38bdf8' },
-    /** 空闲/未访问 */
-    idle:       { background: '#334155', border: '#475569' },
-    /** 已访问 */
-    visited:    { background: '#1e3a5f', border: '#38bdf8' },
-    /** 当前操作节点 */
-    current:    { background: '#78350f', border: '#fbbf24' },
-    /** 已确定/已最终化 */
-    finalized:  { background: '#14532d', border: '#34d399' },
-    /** 在队列/栈中 */
-    inQueue:    { background: '#0c4a6e', border: '#22d3ee' },
-    /** prev 指针 */
-    prev:       { background: '#14532d', border: '#34d399' },
-    /** next/fast 指针 */
-    next:       { background: '#4c1d95', border: '#a78bfa' },
-    /** 找到目标 */
-    found:      { background: '#14532d', border: '#34d399' },
-    /** 匹配/相遇 */
-    matched:    { background: '#7f1d1d', border: '#f87171' },
-    /** slow 走过的路径 */
-    visitedTrack: { background: '#0c4a6e', border: '#7dd3fc' },
+    default:    { background: '#dbeafe', border: '#3b82f6' },
+    idle:       { background: '#f1f5f9', border: '#cbd5e1' },
+    visited:    { background: '#dbeafe', border: '#3b82f6' },
+    current:    { background: '#fef3c7', border: '#f59e0b' },
+    finalized:  { background: '#dcfce7', border: '#22c55e' },
+    inQueue:    { background: '#e0f2fe', border: '#0ea5e9' },
+    prev:       { background: '#dcfce7', border: '#22c55e' },
+    next:       { background: '#ede9fe', border: '#8b5cf6' },
+    found:      { background: '#dcfce7', border: '#22c55e' },
+    matched:    { background: '#fecaca', border: '#ef4444' },
+    visitedTrack: { background: '#e0f2fe', border: '#7dd3fc' },
 };
