@@ -100,9 +100,6 @@ export class MatrixTab extends BaseTab {
         this.render(); // 重置矩阵
         await new Promise((r) => setTimeout(r, 200));
 
-        // 等待期间用户可能点了停止
-        if (this.ctx.store.state.animationAbort) return;
-
         const completed = await this.ctx.animation.play(frames, delay, (frame, i) => {
             const cellId = `${frame.row}-${frame.col}`;
             this.ctx.renderer.updateNodes([{
