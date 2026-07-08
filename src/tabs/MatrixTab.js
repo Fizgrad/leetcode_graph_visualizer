@@ -67,7 +67,7 @@ export class MatrixTab extends BaseTab {
                     fixed: true,
                     shape: 'box',
                     margin: { top: 8, right: 12, bottom: 8, left: 12 },
-                    font: { size: 14, face: 'monospace', color: '#1e293b' },
+                    font: { size: 14, face: 'monospace', color: '#e2e8f0' },
                     color: { border: '#38bdf8', background: '#1e3a5f' },
                     widthConstraint: { minimum: 60 },
                 });
