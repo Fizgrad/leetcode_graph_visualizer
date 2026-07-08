@@ -48,7 +48,7 @@ function makeHighlights(n, marks) {
  * 反转链表（迭代法）
  * 逐帧更新边方向: curr.next = prev
  */
-export function generateReverseFrames(arr, _opts = {}) {
+export function generateReverseFrames(arr) {
     const n = arr.length;
     const frames = [];
     let prev = null;
@@ -344,7 +344,7 @@ export function generateRemoveNthFromEndFrames(arr, n, opts = {}) {
 
 /** 所有算法注册表 */
 export const LIST_ALGOS = {
-    reverse: { label: '反转链表', needsParam: false, generate: (arr, _param, _isCircular, opts) => ({ frames: generateReverseFrames(arr, opts) }) },
+    reverse: { label: '反转链表', needsParam: false, generate: (arr) => ({ frames: generateReverseFrames(arr) }) },
     findMiddle: { label: '找中点 (快慢指针)', needsParam: false, generate: (arr, _param, _isCircular, opts) => ({ frames: generateFindMiddleFrames(arr, opts) }) },
     detectCycle: { label: '检测环 (快慢指针)', needsParam: false, generate: (arr, _param, isCircular, opts) => ({ frames: generateDetectCycleFrames(arr, isCircular, opts) }) },
     removeNth: { label: '删除倒数第N个', needsParam: true, paramName: 'n', generate: (arr, param, _isCircular, opts) => { const r = generateRemoveNthFromEndFrames(arr, param, opts); return { frames: r.frames, deletedIndex: r.deletedIndex }; } },

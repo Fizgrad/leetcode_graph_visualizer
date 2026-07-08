@@ -39,8 +39,4 @@ export class Store {
     setTab(tabIndex) {
         this.setState({ currentTab: tabIndex });
     }
-
-    setAnimation(running, abort = false) {
-        this.setState({ animationRunning: running, animationAbort: abort });
-    }
 }

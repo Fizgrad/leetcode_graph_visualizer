@@ -2,7 +2,7 @@
  * BFS 遍历 — 生成动画帧序列
  * @returns {Array<Frame>} 每帧包含 visited/current/inQueue/order/description
  */
-export function generateBFSFrames(adjList, start, nodeCount) {
+export function generateBFSFrames(adjList, start) {
     const frames = [];
     const visited = new Set([start]);
     const queue = [start];

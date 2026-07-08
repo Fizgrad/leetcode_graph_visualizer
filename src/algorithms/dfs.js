@@ -1,7 +1,7 @@
 /**
  * DFS 遍历（迭代式）— 生成动画帧序列
  */
-export function generateDFSFrames(adjList, start, nodeCount) {
+export function generateDFSFrames(adjList, start) {
     const frames = [];
     const visited = new Set();
     const stack = [start];

@@ -46,11 +46,6 @@ export class Renderer {
         this.nodes.update(updates);
     }
 
-    /** 批量更新边属性 */
-    updateEdges(updates) {
-        this.edges.update(updates);
-    }
-
     /** 获取节点/边数量 */
     getStats() {
         return { nodes: this.nodes.length, edges: this.edges.length };

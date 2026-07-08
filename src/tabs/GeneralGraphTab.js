@@ -12,8 +12,8 @@ import { generateMaxFlowFrames } from '../algorithms/maxFlow.js';
 import { Renderer } from '../core/Renderer.js';
 
 const ALGORITHMS = {
-    bfs: { needsEnd: false, runner: (adj, s, e, n, dir) => ({ frames: generateBFSFrames(adj, s, n), result: () => 'BFS 顺序' }) },
-    dfs: { needsEnd: false, runner: (adj, s, e, n, dir) => ({ frames: generateDFSFrames(adj, s, n), result: () => 'DFS 顺序' }) },
+    bfs: { needsEnd: false, runner: (adj, s, e, n, dir) => ({ frames: generateBFSFrames(adj, s), result: () => 'BFS 顺序' }) },
+    dfs: { needsEnd: false, runner: (adj, s, e, n, dir) => ({ frames: generateDFSFrames(adj, s), result: () => 'DFS 顺序' }) },
     dijkstra: { needsEnd: true, runner: (adj, s, e, n, dir) => { const r = generateDijkstraFrames(adj, s, e, n); return { frames: r.frames, result: () => `最短距离: ${r.dist}${r.path.length ? ' | 路径: ' + r.path.join(' → ') : ' (不可达)'}` }; } },
     bellman: { needsEnd: true, runner: (adj, s, e, n, dir) => { const r = generateBellmanFordFrames(adj, s, e, n); return { frames: r.frames, result: () => r.negativeCycle ? '检测到负环！' : `最短距离: ${r.dist}` }; } },
     maxflow: { needsEnd: true, runner: (adj, s, e, n, dir) => { const r = generateMaxFlowFrames(adj, s, e, n, dir); return { frames: r.frames, result: () => `最大流: ${r.maxFlow}` }; } },
