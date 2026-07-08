@@ -62,7 +62,7 @@ export class BinaryTreeTab extends BaseTab {
             this._lastEdges = edges;
             this.ctx.renderer.setData(nodes, edges, {
                 layout: { hierarchical: { direction: 'UD', sortMethod: 'directed', levelSeparation: 80, nodeSpacing: 120 } },
-                nodes: { shape: 'circle', size: 25, color: { border: '#38bdf8', background: '#1e3a5f' } },
+                nodes: { shape: 'circle', size: 25, font: { color: '#e2e8f0' }, color: { border: '#38bdf8', background: '#1e3a5f' } },
                 edges: { arrows: 'to', color: '#475569' },
                 physics: { enabled: false },
             });

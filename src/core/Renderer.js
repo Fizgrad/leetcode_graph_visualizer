@@ -22,6 +22,7 @@ export class Renderer {
             nodes: {
                 shape: 'box',
                 size: 25,
+                font: { color: '#e2e8f0' },
                 color: { border: '#38bdf8', background: '#1e3a5f' },
             },
             edges: { color: '#475569' },

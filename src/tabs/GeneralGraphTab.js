@@ -234,7 +234,7 @@ export class GeneralGraphTab extends BaseTab {
 
         this.ctx.renderer.setData(nodes, edges, {
             layout: { hierarchical: false },
-            nodes: { shape: 'box', size: 25, color: { border: '#38bdf8', background: '#1e3a5f' } },
+            nodes: { shape: 'box', size: 25, font: { color: '#e2e8f0' }, color: { border: '#38bdf8', background: '#1e3a5f' } },
             edges: {
                 arrows: { to: { enabled: directed } },
                 font: { align: 'top', color: '#f87171', strokeWidth: 0 },
